@@ -84,7 +84,7 @@ syslog_messages () {
   if [[ ! -r "$SYSLOG_FILENAME" ]] ; then
     sudo="sudo"
   fi 
-  $sudo tail -F "$SYSLOG_FILENAME" \
+  exec $sudo tail -F "$SYSLOG_FILENAME" \
     | grep --line-buffered -Ew "$mac_regex" \
       | grep --line-buffered -Ew \
         '(AP-STA-CONNECTED|associated|handshake completed|dhcps-rx)'
