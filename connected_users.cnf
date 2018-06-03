@@ -1,0 +1,39 @@
+# MIT License
+# 
+# Copyright (c) 2018 Nicola Worthington
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Notification command to run upon a newly connected user.
+NOTIFY_CMD="connected_users_notify.sh"
+
+# Number of seconds to cache a new connection for. No new notifications for a
+# user will be sent if they are dectected re-connected during this period.
+CACHE_TTL_SECONDS="86400"
+
+# Syslog log file to monitor for wireless access point association and DHCP
+# lease messages that may contain a users MAC address.
+SYSLOG_FILENAME="/var/log/syslog"
+
+# Router XML DHCP lease information URL to monitor the currently allocated DHCP
+# leases to use as a backup method of detecting user connections.
+DHCP_LEASE_XML_URL="http://myrouter.localdomain/status/dhcp/xml"
+DHCP_LEASE_XML_URL_USERNAME="reporting"
+DHCP_LEASE_XML_URL_PASSWORD="password"
+

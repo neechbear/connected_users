@@ -1,0 +1,8 @@
+mac,enabled,notify,dhcp,device,owner,telegram
+64:bc:00:00:00:01,true,true,android-1234,Nexus 5,Jane,@janedoe
+58:55:00:00:00:02,true,false,felixesmba,MacBook Air,Felix,@felix89
+54:e4:00:00:00:03,true,false,,iPad Mini,John,@johndoe
+64:bc:00:00:00:04,true,true,,Nexus 5X,John,@johndoe
+84:3a:00:00:00:05,true,true,machopeas,Lenovo X1 Carbon,Teddy,@teddy
+34:c0:00:00:00:06,true,true,jophone,Phone,Jo,@joblow
+a8:e3:00:00:00:07,true,false,playstation3,Sony Playstation 3,Jane,@janedoe

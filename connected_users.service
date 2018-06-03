@@ -1,0 +1,13 @@
+[Unit]
+Description=connected_users
+    
+[Service]
+ExecStart=/usr/local/bin/connected_users.sh
+WorkingDirectory=/tmp
+Restart=always
+RestartSec=60
+User=root
+Group=adm
+    
+[Install]
+WantedBy=multi-user.target
