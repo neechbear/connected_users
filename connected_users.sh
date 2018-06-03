@@ -141,13 +141,14 @@ process_message_queue () {
   declare source_fd="$2"
   if read -u "$source_fd" -t 0 ; then
     while read -r -t 1 -u "$source_fd" unqueued_msg ; do
-      if IFS=, read -r ${MAP_COLUMNS[@]} < <(grep -iw "^$(extract_mac <<< "$unqueued_msg")" "$map_file") ; then
-        is_true "$enabled" || continue
+      if IFS=, read -r ${MAP_COLUMNS[@]} < <(grep -iw "^$(extract_mac <<< "$unqueued_msg")" "$map_file" || true) ; then
+        [[ -n "${mac:-}" ]] || continue
+        is_true "${enabled:-false}" || continue
         mac="${mac,,}"
         export ${MAP_COLUMNS[@]}
         if [[ -z "${activated_cache[HW${mac//:/}]:-}" ]] ; then
           eval "notify_admin '${MAP_COLUMNS[@]}' $(printf '"$%q" ' "${MAP_COLUMNS[@]}")"
-          if is_true "$notify" ; then
+          if is_true "${notify:-false}" ; then
             eval "notify_user '${MAP_COLUMNS[@]}' $(printf '"$%q" ' "${MAP_COLUMNS[@]}")"
           fi
         fi
