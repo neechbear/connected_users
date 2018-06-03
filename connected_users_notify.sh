@@ -25,7 +25,7 @@
 # https://github.com/vysheng/tg
 
 set -Eeuo pipefail
-trap '>&2 printf "\e[0;1;31mFatal error at ${BASH_SOURCE[0]} line $LINENO; exit code $?.\e[0m\n"' ERR
+trap '>&2 printf "\e[0;1;31mFatal error executing $BASH_COMMAND at ${BASH_SOURCE[0]} line $LINENO; exit code $?.\e[0m\n"' ERR
 
 declare -r admin_telegram="@janedoe"
 
