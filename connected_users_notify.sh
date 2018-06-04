@@ -98,8 +98,11 @@ EOM
 }
 
 notify_admin () {
-  declare recipient="${1:-}" telegram="${2:-}" owner="${2:-}" \
-          device="${3:-}" mac="${4:-}"
+  declare recipient="${1:-}"
+  declare telegram="${2:-}"
+  declare owner="${3:-}"
+  declare device="${4:-}"
+  declare mac="${5:-}"
   case "${telegram,,}" in
     @janejoe) ;;
     *)
