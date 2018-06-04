@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 set -Eeuo pipefail
-trap '>&2 printf "\e[0;1;31mFatal error at ${BASH_SOURCE[0]} line $LINENO; exit code $?.\e[0m\n"' ERR
+trap '>&2 printf "\e[0;1;31mFatal error executing $BASH_COMMAND at ${BASH_SOURCE[0]} line $LINENO; exit code $?.\e[0m\n"' ERR
 
 # Define some contstnats.
 if [[ "$(readlink -f ${BASH_SOURCE[0]})" == "$HOME"* ]] ; then
@@ -84,7 +84,7 @@ syslog_messages () {
   if [[ ! -r "$SYSLOG_FILENAME" ]] ; then
     sudo="sudo"
   fi 
-  $sudo tail -F "$SYSLOG_FILENAME" \
+  exec $sudo tail -F "$SYSLOG_FILENAME" \
     | grep --line-buffered -Ew "$mac_regex" \
       | grep --line-buffered -Ew \
         '(AP-STA-CONNECTED|associated|handshake completed|dhcps-rx)'
@@ -141,13 +141,14 @@ process_message_queue () {
   declare source_fd="$2"
   if read -u "$source_fd" -t 0 ; then
     while read -r -t 1 -u "$source_fd" unqueued_msg ; do
-      if IFS=, read -r ${MAP_COLUMNS[@]} < <(grep -iw "^$(extract_mac <<< "$unqueued_msg")" "$map_file") ; then
-        is_true "$enabled" || continue
+      if IFS=, read -r ${MAP_COLUMNS[@]} < <(grep -iw "^$(extract_mac <<< "$unqueued_msg")" "$map_file" || true) ; then
+        [[ -n "${mac:-}" ]] || continue
+        is_true "${enabled:-false}" || continue
         mac="${mac,,}"
         export ${MAP_COLUMNS[@]}
         if [[ -z "${activated_cache[HW${mac//:/}]:-}" ]] ; then
           eval "notify_admin '${MAP_COLUMNS[@]}' $(printf '"$%q" ' "${MAP_COLUMNS[@]}")"
-          if is_true "$notify" ; then
+          if is_true "${notify:-false}" ; then
             eval "notify_user '${MAP_COLUMNS[@]}' $(printf '"$%q" ' "${MAP_COLUMNS[@]}")"
           fi
         fi
