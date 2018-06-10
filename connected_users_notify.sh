@@ -121,6 +121,7 @@ main () {
   declare function="$1"; shift || true
   declare origin="$1"; shift || true
   declare -a fields=($1); shift || true
+  declare -A f=()
 
   if is_true "${DEBUG:-false}" ; then
     echo =================================================
@@ -131,14 +132,15 @@ main () {
     declare i=0 v=""
     for v in "$@" ; do
       echo "[$i] ${fields[$i]}=$v"
+      f["${fields[$i]}"]="$v"
       i=$(( i + 1 ))
     done
     echo =================================================
   fi
 
   case "${function,,}" in
-    notify_user) notify_user "$telegram" ;;
-    notify_admin) notify_admin "$admin_telegram" "$telegram" "$owner" "$device" "$mac" ;;
+    notify_user) notify_user "${f[telegram]}" ;;
+    notify_admin) notify_admin "$admin_telegram" "${f[telegram]}" "${f[owner]}" "${f[device]}" "${f[mac]}" ;;
     *) ;;
   esac
 }
