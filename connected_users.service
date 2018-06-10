@@ -8,6 +8,8 @@ Restart=always
 RestartSec=60
 User=root
 Group=adm
+StandardOutput=null
+StandardError=null
     
 [Install]
 WantedBy=multi-user.target
